@@ -22,13 +22,11 @@ in
     tags = [ "sudhalaptopssh" ]; 
   };
 
-  configurations.secrets.policyGroups = {
-    "sudhalaptopssh" = {
-      basePath = "modules/machines/laptop/secrets";
-      files = {
-        "sudhalaptoptpm.age" = [ "root" ];
-        "sudhalaptopssh.age" = [ "sudhalaptoptpm" ];
-      };
+  configurations.secrets.policyGroups."laptop" = {
+    basePath = "modules/machines/laptop/secrets";
+    files = {
+      "sudhalaptoptpm.age" = [ "root" ];
+      "sudhalaptopssh.age" = [ "sudhalaptoptpm" ];
     };
   };
   
@@ -45,7 +43,10 @@ in
           mode = "0600";
           owner = "root";
         };
-        imports = with config.flake.nixosModules; [ 
+        imports = 
+        with config.flake.nixosModules;
+        with inputs.opinions.nixosModules;  
+        [ 
           inputs.agenix.nixosModules.default
           cosmicage
           laptop
@@ -53,12 +54,16 @@ in
           plasma
           sudha
         ];
+        
       }; 
     }; 
   };
 
   configurations.home = {
-    "sudha@laptop" = with config.flake.homeModules; mkUser "laptop" [
+    "sudha@laptop" = 
+    with config.flake.homeModules;
+    with inputs.opinions.homeModules; 
+    mkUser "laptop" [
       sudhacli
       sudhagui
       zen-browser
