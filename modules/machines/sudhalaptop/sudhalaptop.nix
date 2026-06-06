@@ -45,12 +45,14 @@ in
           inputs.agenix.nixosModules.default
           laptop
           system
-          ollama_cuda
+          ollama_cud          
+a
           openwebui 
           docker
           sudha
           plasma
         ];
+        
       }; 
     }; 
   };
