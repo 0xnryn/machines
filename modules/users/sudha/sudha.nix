@@ -102,9 +102,11 @@
     };
   };
   
-  flake.homeModules.sudhagui = { pkgs, ... }:{
-      home.packages = with pkgs; [
-        zed-editor
-      ];
-    };
+  # Add 'config' to the arguments here!
+  flake.homeModules.sudhagui = { config, pkgs, lib, ... }:{
+    home.packages = with pkgs; [
+      zed-editor
+      vlc
+    ];
+  };
 }

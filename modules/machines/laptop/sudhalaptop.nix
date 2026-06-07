@@ -44,8 +44,8 @@ in
           owner = "root";
         };
         imports = 
-        with config.flake.nixosModules;
-        with inputs.opinions.nixosModules;  
+        with inputs.opinions.nixosModules; 
+        with config.flake.nixosModules;    
         [ 
           inputs.agenix.nixosModules.default
           cosmicage
@@ -54,7 +54,6 @@ in
           plasma
           sudha
         ];
-        
       }; 
     }; 
   };
@@ -67,6 +66,8 @@ in
       sudhacli
       sudhagui
       zen-browser
+      helium-browser
+      plasma
     ];
   };  
 }

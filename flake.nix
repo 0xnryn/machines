@@ -43,6 +43,7 @@
     systems = [ "x86_64-linux" "aarch64-linux" ]; 
     imports = [ 
       (inputs.import-tree ./modules) 
+      inputs.cosmic.flakeModules.default
     ];
   };
 }
