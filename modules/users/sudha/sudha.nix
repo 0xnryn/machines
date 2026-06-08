@@ -6,24 +6,17 @@
 
   flake.nixosModules.sudha = { config, pkgs, lib, ... }: {
     
-    # Switched to native age.secrets and provided the explicit path
-    age.secrets."sudhassh" = {
-      file = "${inputs.self}/modules/users/sudha/secrets/sudhassh.age";
-      mode = "0600";
+    sops.defaultSopsFile = "${inputs.self}/modules/users/sudha/sudhasecrets.yaml";
+    sops.secrets."sudhassh" = {
       owner = "sudha";
-      group = "users";
-      path = "/home/sudha/.ssh/id_ed25519";
+      mode = "0400"; 
     };
-    
-    age.secrets."sudhauserpass" = {
-      file = "${inputs.self}/modules/users/sudha/secrets/sudhauserpass.age";
-    };
+    sops.secrets."sudhauserpass" = {};
     
     users.users.sudha = {
       isNormalUser = true;
       extraGroups = [ "wheel" "dialout" ];
-      # This remains exactly the same!
-      hashedPasswordFile = config.age.secrets."sudhauserpass".path;
+      hashedPasswordFile = config.sops.secrets."sudhauserpass".path;
     };
   };
 
@@ -77,7 +70,7 @@
       settings = {
         "*" = {
           # This continues to work flawlessly because it reads the native age config
-          IdentityFile = osConfig.age.secrets."sudhassh".path;
+          IdentityFile = osConfig.sops.secrets."sudhassh".path;
           AddKeysToAgent = "yes";
           ServerAliveInterval = 60;
         };
