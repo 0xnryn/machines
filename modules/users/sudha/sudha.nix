@@ -6,13 +6,15 @@
 
   flake.nixosModules.sudha = { config, pkgs, lib, ... }: {
     
-    sops.defaultSopsFile = "${inputs.self}/modules/users/sudha/sudhasecrets.yaml";
     sops.secrets."sudhassh" = {
+      sopsFile = "${inputs.self}/modules/users/sudha/sudhasecrets.yaml"; # <-- ADD THIS
       owner = "sudha";
       mode = "0400"; 
     };
-    sops.secrets."sudhauserpass" = {};
     
+    sops.secrets."sudhauserpass" = {
+      sopsFile = "${inputs.self}/modules/users/sudha/sudhasecrets.yaml"; # <-- ADD THIS
+    };
     users.users.sudha = {
       isNormalUser = true;
       extraGroups = [ "wheel" "dialout" ];

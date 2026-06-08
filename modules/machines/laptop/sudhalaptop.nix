@@ -1,3 +1,4 @@
+# sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/sudhalaptoptpm nix run nixpkgs#sops -- modules/users/sudha/secrets.yaml
 { pkgs, config, inputs, ... }:
 {
   imports = [
@@ -8,13 +9,15 @@
     "laptop" = {
       system = "x86_64-linux";
       module = {
-        sops.age.keyFile = "/etc/sudhalaptoptpm";
-        sops.defaultSopsFile = "${inputs.self}/modules/machines/laptop/laptopsecrets.yaml";
-        sops.secrets."sudhalaptopssh" = {
-          path = "/etc/ssh/ssh_host_ed25519_key";
-          mode = "0600";
-          owner = "root";
+        sops.secrets."git-access-tokens" = {
+          sopsFile = "${inputs.self}/modules/machines/laptop/laptopsecrets.yaml"; 
+          mode = "0440";
+          owner = "root"; 
+          group = "wheel";
         };
+        nix.extraOptions = ''
+          !include /run/secrets/git-access-tokens
+        '';
         imports = 
         with inputs.opinions.nixosModules; 
         with config.flake.nixosModules;    
@@ -43,3 +46,4 @@
     };
   }; 
 }
+
