@@ -46,5 +46,20 @@
       }; 
     }; 
   };
+
+  # configurations.home = {
+  #   "sudha@laptop" = {
+  #     hostName = "laptop";
+  #     modules = 
+  #       with config.flake.homeModules;
+  #       with inputs.opinions.homeModules; 
+  #       [
+  #         sudhacli
+  #         sudhagui
+  #         plasma
+  #         helium-browser
+  #       ];
+  #   };
+  # }; 
 }
 
