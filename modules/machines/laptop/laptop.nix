@@ -20,8 +20,6 @@
           format = "yaml";
           path = "/etc/ssh/ssh_host_ed25519_key"; # This is the symlink location
         };
-        
-        # If you need an RSA key as well, you must add it to laptopssh.yaml and define it here
         # sops.secrets."git-access-tokens" = {
         #   sopsFile = "${inputs.self}/modules/machines/laptop/laptopsecrets.yaml"; 
         #   mode = "0440";
@@ -31,6 +29,11 @@
         # nix.extraOptions = ''
         #   !include /run/secrets/git-access-tokens
         # '';
+        users.users.sudha = {
+          isNormalUser = true;
+          extraGroups = [ "wheel" "networkmanager" "dialout" ];          
+          # hashedPasswordFile = config.sops.secrets."sudha-login-password".path;
+        };
         imports = 
         with inputs.opinions.nixosModules; 
         with config.flake.nixosModules;    
@@ -38,25 +41,10 @@
           laptop
           system
           plasma
-          sudha
+          ollama_cuda
         ];
       }; 
     }; 
   };
-
-  configurations.home = {
-    "sudha@laptop" = {
-      hostName = "laptop";
-      modules = 
-        with config.flake.homeModules;
-        with inputs.opinions.homeModules; 
-        [
-          sudhacli
-          sudhagui
-          plasma
-          helium-browser
-        ];
-    };
-  }; 
 }
 
