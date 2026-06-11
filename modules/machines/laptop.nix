@@ -45,6 +45,8 @@ flakeContext@{ inputs, ... }:
           vim
           wget
           yggdrasil
+          alfis-nogui
+          alfis
         ];
         environment.variables = {
           EDITOR = "nano"; VISUAL = "nano"; 
@@ -54,7 +56,14 @@ flakeContext@{ inputs, ... }:
         networking = {
           networkmanager.enable = true;
           hostName = "laptop";
-          firewall.enable = true;
+          firewall = {
+            enable = true;
+            # 1. Allow ALFIS P2P traffic
+            allowedTCPPorts = [ 4244 53535 ];
+            allowedUDPPorts = [ 4244 53535 53 ];
+          };
+          # nameservers = [ "127.0.0.2" ];
+          # networkmanager.dns = "none";
         };
 
         # command to generate yggdrasil key
@@ -97,8 +106,18 @@ flakeContext@{ inputs, ... }:
             ];
           };
         };
-        networking.firewall.allowedTCPPorts = [ 53535 ];
 
+        sops.secrets."syncthing_cert" = {
+          sopsFile = "${inputs.self}/secrets/laptop.yaml";
+          format = "yaml";
+          owner = "root"; # Syncthing runs as root now
+        };
+        sops.secrets."syncthing_key" = {
+          sopsFile = "${inputs.self}/secrets/laptop.yaml";
+          format = "yaml";
+          owner = "root";
+        };
+        
         sops.age.keyFile = "/etc/laptopboot.txt";
         sops.secrets."ssh/ssh_host_ed25519_key" = {
           sopsFile = "${inputs.self}/secrets/laptop.yaml";
@@ -125,6 +144,7 @@ flakeContext@{ inputs, ... }:
         with flakeContext.config.flake.nixosModules;    
         [ 
           inputs.sops-nix.nixosModules.sops
+          # cosmicnetwork
           laptop
           plasma
           ollama_cuda
