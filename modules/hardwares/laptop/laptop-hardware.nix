@@ -1,6 +1,6 @@
 { inputs, lib, ... }:
 {
-  flake.nixosModules.laptop = { pkgs, config, modulesPath,... }: {
+  flake.nixosModules.laptop-hardware = { pkgs, config, modulesPath,... }: {
 
     imports = [ 
       inputs.disko.nixosModules.disko
@@ -45,6 +45,7 @@
   
       kernelParams = [
         "nvidia.NVreg_PreserveVideoMemoryAllocations=0"
+        # "amdgpu.gttsize=16384"
       ];
   
       initrd.availableKernelModules = [ 
@@ -53,18 +54,8 @@
       initrd.kernelModules = [ ];
             
       # 1. ADD "v4l2loopback" TO THIS LIST
-      kernelModules = [ "kvm-amd" "v4l2loopback" ]; 
-      
-      # 2. ADD THE LOOPBACK PACKAGE TO YOUR KERNEL
-      extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
-      
-      # 3. FORCE THE CREATION OF /dev/video9
-      extraModprobeConfig = ''
-        options v4l2loopback devices=1 video_nr=9 card_label="DroidCam Virtual Camera" exclusive_caps=1
-      '';
+      kernelModules = [ "kvm-amd"];
     };
-
-    services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
     hardware = {
 
@@ -77,24 +68,24 @@
         enable32Bit = true;
       };
       
-      nvidia = {
-        modesetting.enable = true;
-        open = true;
-        powerManagement.enable = true;
-        powerManagement.finegrained = true;
-        dynamicBoost.enable = true;
-        nvidiaSettings = true;
+      # nvidia = {
+      #   modesetting.enable = true;
+      #   open = true;
+      #   powerManagement.enable = true;
+      #   powerManagement.finegrained = true;
+      #   dynamicBoost.enable = true;
+      #   nvidiaSettings = true;
         
-        # We have access to 'config' here because of the lambda signature above
-        package = config.boot.kernelPackages.nvidiaPackages.beta;
+      #   # We have access to 'config' here because of the lambda signature above
+      #   package = config.boot.kernelPackages.nvidiaPackages.beta;
 
-        prime = {
-          offload.enable = true;
-          offload.enableOffloadCmd = true;
-          amdgpuBusId = "PCI:5:0:0";
-          nvidiaBusId = "PCI:1:0:0";
-        };
-      };
+      #   prime = {
+      #     offload.enable = true;
+      #     offload.enableOffloadCmd = true;
+      #     amdgpuBusId = "PCI:5:0:0";
+      #     nvidiaBusId = "PCI:1:0:0";
+      #   };
+      # };
     };
 
 
