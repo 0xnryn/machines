@@ -40,24 +40,23 @@
       EDITOR = "nano"; VISUAL = "nano"; 
     };
     environment.systemPackages = with pkgs; [
-      age age-plugin-tpm android-tools
+      age age-plugin-tpm android-tools alfis-nogui alfis
       bind
       cloudflared curl
-      droidcam
+      droidcam docker
       git gptfdisk
       home-manager htop
       jq
       mtr
       pciutils
+      ryzenadj
       sbctl sops ssh-to-age
       tcpdump tree
       util-linux unzip
       vim
       wget
-      yggdrasil
-      alfis-nogui
-      alfis
-      docker
+      yggdrasil    
+      zenmonitor
     ];
     networking = {
       networkmanager.enable = true;

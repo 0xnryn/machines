@@ -19,7 +19,8 @@
       initrd.systemd.enable = true;      
       binfmt.emulatedSystems = [ "aarch64-linux" ];
       kernelPackages = pkgs.linuxPackages_latest;
-  
+      extraModulePackages = [ config.boot.kernelPackages.zenpower ];
+      kernelModules = [ "kvm-amd" "zenpower" ];
       # NATIVE TPM LUKS BINDING
       # Crucial: We bind strictly to pcr7 (Secure Boot certificate validation).
       # This prevents any NVIDIA module updates from breaking the automated unlock flow.
@@ -52,9 +53,6 @@
         "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "tpm_crb" "tpm_tis" 
       ];
       initrd.kernelModules = [ ];
-            
-      # 1. ADD "v4l2loopback" TO THIS LIST
-      kernelModules = [ "kvm-amd"];
     };
 
     hardware = {
@@ -62,6 +60,7 @@
       bluetooth.enable = true;
 
       cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+      cpu.amd.ryzen-smu.enable = true;
       
       graphics = {
         enable = true;

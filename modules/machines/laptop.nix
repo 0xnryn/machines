@@ -8,6 +8,7 @@ flakeContext@{ inputs, ... }:
     "laptop" = {
       system = "x86_64-linux";
       module = { config, ... }:{
+        networking.hostName = "laptop";
         imports =   
         [ 
           inputs.sops-nix.nixosModules.sops
@@ -15,6 +16,9 @@ flakeContext@{ inputs, ... }:
           flakeContext.config.flake.nixosModules.laptop-configuration
           inputs.opinions.nixosModules.plasma
           inputs.opinions.nixosModules.sudha-yggdrasil
+          # inputs.opinions.nixosModules.sudha-openwebui
+          # inputs.opinions.nixosModules.sudha-etcd
+          # inputs.opinions.nixosModules.sudha-coredns
         ];
         sops.age.keyFile = "/etc/${config.networking.hostName}boot.txt";
         sops.secrets."ssh/ssh_host_ed25519_key" = {
@@ -44,10 +48,6 @@ flakeContext@{ inputs, ... }:
         #   owner = "root"; 
         #   group = "wheel";
         # };
-    
-        
-
-        networking.hostName = "laptop";
         users.users.sudha = {
           isNormalUser = true;
           extraGroups = [ "wheel" "networkmanager" "dialout" "docker" "adbusers"];          
