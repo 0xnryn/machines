@@ -17,7 +17,11 @@
     time.timeZone = "Asia/Kolkata";
     i18n.defaultLocale = "en_US.UTF-8";
     console.keyMap = "us";
-    virtualisation.docker.enable = true;
+    # virtualisation.docker.enable = true;
+    virtualisation.podman = {
+      enable = true;
+      dockerCompat = true; # You can still type 'docker run', it just uses podman securely
+    };
     services = {
       printing.enable = true;
       openssh.enable = true;
@@ -36,6 +40,20 @@
         enable = true;
       };
     };
+    
+    security.sudo.extraRules = [
+      {
+        users = [ "sudha" ]; # Make sure this matches your exact Linux username
+        commands = [
+          {
+            command = "${pkgs.ryzenadj}/bin/ryzenadj";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];  
+    environment.shellAliases.ryzenadj = "sudo ryzenadj";
+    
     environment.variables = {
       EDITOR = "nano"; VISUAL = "nano"; 
     };
