@@ -17,11 +17,11 @@
     time.timeZone = "Asia/Kolkata";
     i18n.defaultLocale = "en_US.UTF-8";
     console.keyMap = "us";
-    # virtualisation.docker.enable = true;
-    virtualisation.podman = {
-      enable = true;
-      dockerCompat = true; # You can still type 'docker run', it just uses podman securely
-    };
+    virtualisation.docker.enable = true;
+    # virtualisation.podman = {
+    #   enable = true;
+    #   dockerCompat = true; # You can still type 'docker run', it just uses podman securely
+    # };
     services = {
       printing.enable = true;
       openssh.enable = true;
@@ -39,6 +39,7 @@
       ollama = {
         enable = true;
       };
+      pcscd.enable = true;
     };
     
     security.sudo.extraRules = [
@@ -75,6 +76,9 @@
       wget
       yggdrasil    
       zenmonitor
+      pcsclite
+      opensc
+      nss.tools
     ];
     networking = {
       networkmanager.enable = true;

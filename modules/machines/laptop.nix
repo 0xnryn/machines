@@ -16,60 +16,27 @@ flakeContext@{ inputs, ... }:
           flakeContext.config.flake.nixosModules.laptop-configuration
           inputs.opinions.nixosModules.plasma
           inputs.opinions.nixosModules.sudha-yggdrasil
-          # inputs.opinions.nixosModules.sudha-openwebui
-          # inputs.opinions.nixosModules.sudha-etcd
-          # inputs.opinions.nixosModules.sudha-coredns
+          # inputs.opinions.nixosModules.sudha-gnunet
         ];
         sops.age.keyFile = "/etc/${config.networking.hostName}boot.txt";
         sops.secrets."ssh/ssh_host_ed25519_key" = {
-          sopsFile = "${inputs.self}/secrets/laptop.yaml";
+          sopsFile = "${inputs.self}/secrets/${config.networking.hostName}.yaml";
           format = "yaml";
           path = "/etc/ssh/ssh_host_ed25519_key"; # This is the symlink location
         };
         # command to generate yggdrasil key
         # nix run nixpkgs#yggdrasil -- -useconffile <(yggdrasil -genconf -json) -exportkey
         sops.secrets."yggdrasil" = {
-          sopsFile = "${inputs.self}/secrets/laptop.yaml";
+          sopsFile = "${inputs.self}/secrets/${config.networking.hostName}.yaml";
           format = "yaml";
         };
-        sops.secrets."syncthing_cert" = {
-          sopsFile = "${inputs.self}/secrets/laptop.yaml";
-          format = "yaml";
-          owner = "root"; 
-        };
-        sops.secrets."syncthing_key" = {
-          sopsFile = "${inputs.self}/secrets/laptop.yaml";
-          format = "yaml";
-          owner = "root";
-        };
-        # sops.secrets."git-access-tokens" = {
-        #   sopsFile = "${inputs.self}/secrets/laptop.yaml"; 
-        #   mode = "0440";
-        #   owner = "root"; 
-        #   group = "wheel";
-        # };
         users.users.sudha = {
           isNormalUser = true;
-          extraGroups = [ "wheel" "networkmanager" "dialout" "docker" "adbusers"];          
+          extraGroups = [ "wheel" "networkmanager" "dialout" "docker" "adbusers" ];          
           # hashedPasswordFile = config.sops.secrets."sudha-login-password".path;
         };
       }; 
     }; 
   };
-
-  # configurations.home = {
-  #   "sudha@laptop" = {
-  #     hostName = "laptop";
-  #     modules = 
-  #       with config.flake.homeModules;
-  #       with inputs.opinions.homeModules; 
-  #       [
-  #         sudhacli
-  #         sudhagui
-  #         plasma
-  #         helium-browser
-  #       ];
-  #   };
-  # }; 
 }
 
