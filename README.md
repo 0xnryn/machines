@@ -16,9 +16,9 @@ nix run nixpkgs#sops -- secrets/laptop.yaml
 
 nix run nixpkgs#sops -- updatekeys secrets/laptop.yaml
 
-sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/laptoptpm.txt nix run nixpkgs#sops -- secrets/laptop.yaml
+sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/laptopboot.txt nix run nixpkgs#sops -- secrets/laptop.yaml
 
-sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/laptoptpm.txt nix run nixpkgs#sops -- updatekeys secrets/laptop.yaml
+sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/laptopboot.txt nix run nixpkgs#sops -- updatekeys secrets/laptop.yaml
 
 sudo -E sops secrets/laptop.yaml
 

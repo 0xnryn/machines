@@ -9,4 +9,10 @@ creation_rules:
       - age:
           - *sudha
           - *laptopboot
+  - path_regex: secrets/server.yaml$
+    key_groups:
+      - age:
+          - *sudha
+          - *laptopboot
           - *serverboot
+          
