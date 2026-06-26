@@ -1,6 +1,7 @@
 keys:
   - &sudha age1keca023xe9nya8yqfdx5ca32w57m8k8galwthuzndlvehngmt93suu330j
   - &laptopboot age1562a4ecv4rhg762q8gek0gv5sw6wgasua3kvghm02as2zxhkeemqkr8eyy
+  - &serverboot age1ja9z6ckf9nn050u800yrz3m2rjvcfr77faymq88glmgnjjcfadtsgj60kc
 
 creation_rules:
   - path_regex: secrets/laptop.yaml$
@@ -8,3 +9,4 @@ creation_rules:
       - age:
           - *sudha
           - *laptopboot
+          - *serverboot

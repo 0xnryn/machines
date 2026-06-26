@@ -7,27 +7,36 @@ flakeContext@{ inputs, ... }:
   configurations.nixos = {
     "laptop" = {
       system = "x86_64-linux";
-      module = { config, ... }:{
-        networking.hostName = "laptop";
+      module = { config, ... }:
+      let
+        hostName = "laptop";
+      in
+      {
+        networking = {
+          networkmanager.enable = true;
+          inherit hostName;
+        };
         imports =   
         [ 
           inputs.sops-nix.nixosModules.sops
-          flakeContext.config.flake.nixosModules.laptop-hardware
-          flakeContext.config.flake.nixosModules.laptop-configuration
+          inputs.self.nixosModules."${hostName}-hardware"
+          inputs.self.nixosModules."${hostName}-configuration"
+          # flakeContext.config.flake.nixosModules.${hostName}-hardware
+          # flakeContext.config.flake.nixosModules.${hostName}-configuration
           inputs.opinions.nixosModules.plasma
           inputs.opinions.nixosModules.sudha-yggdrasil
           # inputs.opinions.nixosModules.sudha-gnunet
         ];
-        sops.age.keyFile = "/etc/${config.networking.hostName}boot.txt";
+        sops.age.keyFile = "/etc/${hostName}boot.txt";
         sops.secrets."ssh/ssh_host_ed25519_key" = {
-          sopsFile = "${inputs.self}/secrets/${config.networking.hostName}.yaml";
+          sopsFile = "${inputs.self}/secrets/${hostName}.yaml";
           format = "yaml";
           path = "/etc/ssh/ssh_host_ed25519_key"; # This is the symlink location
         };
         # command to generate yggdrasil key
         # nix run nixpkgs#yggdrasil -- -useconffile <(yggdrasil -genconf -json) -exportkey
         sops.secrets."yggdrasil" = {
-          sopsFile = "${inputs.self}/secrets/${config.networking.hostName}.yaml";
+          sopsFile = "${inputs.self}/secrets/${hostName}.yaml";
           format = "yaml";
         };
         users.users.sudha = {

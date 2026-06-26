@@ -9,11 +9,6 @@
     ];
     
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
-    networking = {
-      networkmanager.enable = true;
-      hostName = "laptop";
-    };
     
     boot = {
       initrd.systemd.enable = true;      

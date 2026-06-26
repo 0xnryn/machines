@@ -22,14 +22,18 @@ sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/laptoptpm.txt nix run nixpkgs#sops -- up
 
 sudo -E sops secrets/laptop.yaml
 
+sudo SOPS_AGE_KEY_FILE=/etc/laptopboot.txt sops secrets/laptop.yaml
+
 env -u SOPS_AGE_KEY_FILE SOPS_AGE_KEY=$(nix run nixpkgs#age -- -d secrets/sudha.age 2>/dev/null | grep AGE-SECRET-KEY) nix run nixpkgs#sops -- secrets/laptop.yaml
 
 
 # This creates a file named 'key.txt' containing your private key
-nix run nixpkgs#age-keygen -o key.txt
+nix run nixpkgs#age-keygen -- -o key.txt
+age-keygen -o key.txt
 
 # This will ask you to enter a passphrase
-nix run nixpkgs#age -p -o key.txt.age key.txt
+nix run nixpkgs#age -- -p -o key.txt.age key.txt
+age -p -o key.txt.age key.txt
 
 
 # # Start the agent if it isn't running
@@ -49,4 +53,10 @@ In this setup, you run the Tor daemon on your laptop. You configure Yggdrasil to
 What you achieve: You solve the "Public Peer knows my IP" problem without needing to buy your own VPS. The public Yggdrasil peer only sees traffic emerging from a random Tor exit node. Your physical location is mathematically severed from your Yggdrasil 200:: identity.
 
 The Cost (Extreme Latency): Tor routes your traffic through three random servers across the globe. Yggdrasil then does its own cryptographic tree-routing on top of that. If you ping an ALFIS domain, the packet might travel around the Earth three times before returning. You are looking at 1,000ms to 3,000ms (1-3 seconds) of latency per click. It is highly secure, but barely usable for web browsing.
+
  
+# 1. Ensure the root user owns the file
+sudo chown root:root /etc/serverboot.txt
+
+# 2. Set strict read-only permissions for root (and completely block everyone else)
+sudo chmod 400 /etc/serverboot.txt

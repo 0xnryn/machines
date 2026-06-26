@@ -42,19 +42,6 @@
       pcscd.enable = true;
     };
     
-    security.sudo.extraRules = [
-      {
-        users = [ "sudha" ]; # Make sure this matches your exact Linux username
-        commands = [
-          {
-            command = "${pkgs.ryzenadj}/bin/ryzenadj";
-            options = [ "NOPASSWD" ];
-          }
-        ];
-      }
-    ];  
-    environment.shellAliases.ryzenadj = "sudo ryzenadj";
-    
     environment.variables = {
       EDITOR = "nano"; VISUAL = "nano"; 
     };
