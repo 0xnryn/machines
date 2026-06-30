@@ -28,8 +28,8 @@ env -u SOPS_AGE_KEY_FILE SOPS_AGE_KEY=$(nix run nixpkgs#age -- -d secrets/sudha.
 
 
 # This creates a file named 'key.txt' containing your private key
-nix run nixpkgs#age-keygen -- -o key.txt
-age-keygen -o key.txt
+nix run nixpkgs#age-keygen -- -o keys.txt
+age-keygen -o keys.txt
 
 # This will ask you to enter a passphrase
 nix run nixpkgs#age -- -p -o key.txt.age key.txt
