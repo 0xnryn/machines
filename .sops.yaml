@@ -1,18 +1,18 @@
 keys:
-  - &sudha age1keca023xe9nya8yqfdx5ca32w57m8k8galwthuzndlvehngmt93suu330j
-  - &laptopboot age1562a4ecv4rhg762q8gek0gv5sw6wgasua3kvghm02as2zxhkeemqkr8eyy
-  - &serverboot age1ja9z6ckf9nn050u800yrz3m2rjvcfr77faymq88glmgnjjcfadtsgj60kc
+  - &nryn age1keca023xe9nya8yqfdx5ca32w57m8k8galwthuzndlvehngmt93suu330j
+  - &nryn-laptop-boot age19ywmcp2xzqy6ah49677rpknlqnwzmwv5sc70kdmnsk34j2ept3eslga8p2
+  - &nryn-server-boot age1ja9z6ckf9nn050u800yrz3m2rjvcfr77faymq88glmgnjjcfadtsgj60kc
 
 creation_rules:
-  - path_regex: secrets/0xnryn-laptop.yaml$
+  - path_regex: secrets/nryn-laptop.yaml$
     key_groups:
       - age:
-          - *sudha
-          - *laptopboot
-  - path_regex: secrets/0xnryn-server.yaml$
+          - *nryn
+          - *nryn-laptop-boot
+  - path_regex: secrets/nryn-server.yaml$
     key_groups:
       - age:
-          - *sudha
-          - *laptopboot
-          - *serverboot
+          - *nryn
+          - *nryn-laptop-boot
+          - *nryn-server-boot
           

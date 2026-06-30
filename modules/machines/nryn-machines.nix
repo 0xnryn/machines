@@ -26,6 +26,7 @@ flakeContext@{ inputs, ... }:
           inputs.opinions.nixosModules.plasma
           inputs.opinions.nixosModules.sudha-yggdrasil
         ];
+        sops.age.keyFile = "/etc/${hostName}-boot.txt";
         sops.secrets."ssh/ssh_host_ed25519_key" = {
           sopsFile = "${inputs.self}/secrets/${hostName}.yaml";
           format = "yaml";
@@ -64,7 +65,7 @@ flakeContext@{ inputs, ... }:
             inputs.self.nixosModules."${hostName}-hardware"
             inputs.self.nixosModules."${hostName}-configuration"
           ];
-          sops.age.keyFile = "/etc/${hostName}boot.txt";
+          sops.age.keyFile = "/etc/${hostName}-boot.txt";
           sops.secrets."ssh/ssh_host_ed25519_key" = {
             sopsFile = "${inputs.self}/secrets/${hostName}.yaml";
             format = "yaml";

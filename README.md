@@ -24,7 +24,7 @@ sudo EDITOR=nano -E sops secrets/0xnryn-laptop.yaml
 
 sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/laptopboot.txt sops secrets/0xnryn-laptop.yaml
 
-env -u SOPS_AGE_KEY_FILE SOPS_AGE_KEY=$(nix run nixpkgs#age -- -d secrets/sudha.age 2>/dev/null | grep AGE-SECRET-KEY) nix run nixpkgs#sops -- secrets/0xnryn-laptop.yaml
+env -u SOPS_AGE_KEY_FILE SOPS_AGE_KEY=$(nix run nixpkgs#age -- -d secrets/nryn.age 2>/dev/null | grep AGE-SECRET-KEY) nix run nixpkgs#sops -- secrets/nryn-laptop.yaml
 
 
 # This creates a file named 'key.txt' containing your private key
