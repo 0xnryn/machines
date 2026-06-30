@@ -1,5 +1,5 @@
 keys:
-  - &nryn age1keca023xe9nya8yqfdx5ca32w57m8k8galwthuzndlvehngmt93suu330j
+  - &admin age1keca023xe9nya8yqfdx5ca32w57m8k8galwthuzndlvehngmt93suu330j
   - &nryn-laptop-boot age19ywmcp2xzqy6ah49677rpknlqnwzmwv5sc70kdmnsk34j2ept3eslga8p2
   - &nryn-server-boot age1ja9z6ckf9nn050u800yrz3m2rjvcfr77faymq88glmgnjjcfadtsgj60kc
 
@@ -7,12 +7,12 @@ creation_rules:
   - path_regex: secrets/nryn-laptop.yaml$
     key_groups:
       - age:
-          - *nryn
+          - *admin
           - *nryn-laptop-boot
   - path_regex: secrets/nryn-server.yaml$
     key_groups:
       - age:
-          - *nryn
+          - *admin
           - *nryn-laptop-boot
           - *nryn-server-boot
           
