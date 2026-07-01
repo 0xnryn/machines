@@ -51,7 +51,7 @@
       cloudflared curl
       droidcam docker
       git gptfdisk
-      home-manager htop helium helix
+      home-manager htop helix
       jq
       mtr
       pciutils
