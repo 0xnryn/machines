@@ -1,7 +1,6 @@
 keys:
   - &admin age1keca023xe9nya8yqfdx5ca32w57m8k8galwthuzndlvehngmt93suu330j
   - &nryn-laptop-boot age19ywmcp2xzqy6ah49677rpknlqnwzmwv5sc70kdmnsk34j2ept3eslga8p2
-  - &nryn-laptop-boot-tpm age1tag1qfwp6rezsrxz6jmulwwtk9ylyp9ms4ahxxfpwtk5kzcq04x53zzd6qc74a7
   - &nryn-server-boot age1ja9z6ckf9nn050u800yrz3m2rjvcfr77faymq88glmgnjjcfadtsgj60kc
 
 creation_rules:
