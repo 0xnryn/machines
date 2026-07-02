@@ -13,7 +13,7 @@
     boot = {
       initrd.systemd.enable = true;      
       binfmt.emulatedSystems = [ "aarch64-linux" ];
-      kernelPackages = pkgs.linuxPackages_latest;
+      kernelPackages = pkgs.linuxPackages;
       extraModulePackages = [ config.boot.kernelPackages.zenpower ];
       kernelModules = [ "kvm-amd" "zenpower" ];
       # NATIVE TPM LUKS BINDING
@@ -39,16 +39,18 @@
         };
       };
   
-      kernelParams = [
-        "nvidia.NVreg_PreserveVideoMemoryAllocations=0"
-        # "amdgpu.gttsize=16384"
-      ];
+      # kernelParams = [
+      #   # "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      #   # "amdgpu.gttsize=16384"
+      # ];
   
       initrd.availableKernelModules = [ 
         "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "tpm_crb" "tpm_tis" 
       ];
       initrd.kernelModules = [ ];
     };
+
+    services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
     hardware = {
 
@@ -62,24 +64,21 @@
         enable32Bit = true;
       };
       
-      # nvidia = {
-      #   modesetting.enable = true;
-      #   open = true;
-      #   powerManagement.enable = true;
-      #   powerManagement.finegrained = true;
-      #   dynamicBoost.enable = true;
-      #   nvidiaSettings = true;
-        
-      #   # We have access to 'config' here because of the lambda signature above
-      #   package = config.boot.kernelPackages.nvidiaPackages.beta;
-
-      #   prime = {
-      #     offload.enable = true;
-      #     offload.enableOffloadCmd = true;
-      #     amdgpuBusId = "PCI:5:0:0";
-      #     nvidiaBusId = "PCI:1:0:0";
-      #   };
-      # };
+      nvidia = {
+        modesetting.enable = true;
+        open = false;
+        powerManagement.enable = true;
+        powerManagement.finegrained = true;
+        dynamicBoost.enable = true;
+        nvidiaSettings = true;        
+        package = config.boot.kernelPackages.nvidiaPackages.beta;
+        prime = {
+          offload.enable = true;
+          offload.enableOffloadCmd = true;
+          amdgpuBusId = "PCI:5:0:0";
+          nvidiaBusId = "PCI:1:0:0";
+        };
+      };
     };
 
 
