@@ -38,7 +38,7 @@
     disko.devices = {
       disk = {
         main = {
-          device = "/dev/disk/by-id/ata-WDC_WD5000AAKX-22ERMA0_WD-WCC2E2YDJFH5"; 
+          device = "/dev/disk/by-id/ata-ST3500418AS_9VMVD6SC"; 
           type = "disk";
           content = {
             type = "gpt";
