@@ -16,20 +16,14 @@
       kernelPackages = pkgs.linuxPackages;
       extraModulePackages = [ config.boot.kernelPackages.zenpower ];
       kernelModules = [ "kvm-amd" "zenpower" ];
-      # NATIVE TPM LUKS BINDING
-      # Crucial: We bind strictly to pcr7 (Secure Boot certificate validation).
-      # This prevents any NVIDIA module updates from breaking the automated unlock flow.
       initrd.luks.devices."enc".crypttabExtraOpts = [ 
         "tpm2-device=auto"
         "tpm2-pcrs=7" 
       ];
   
-      # Standard systemd-boot must be turned OFF for lanzaboote to manage the EFI stub
       loader.systemd-boot.enable = lib.mkForce false;
       loader.efi.canTouchEfiVariables = true;
   
-      # LANZABOOTE SECURE BOOT
-      # LANZABOOTE V1.0.0 STANDARD CONFIGURATION
       lanzaboote = {
         enable = true;
         pkiBundle = "/etc/secureboot";
@@ -39,10 +33,10 @@
         };
       };
   
-      # kernelParams = [
-      #   # "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-      #   # "amdgpu.gttsize=16384"
-      # ];
+      kernelParams = [
+        # "amdgpu.gttsize=16384"
+        # "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      ];
   
       initrd.availableKernelModules = [ 
         "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "tpm_crb" "tpm_tis" 
@@ -81,12 +75,9 @@
       };
     };
 
-
-    # 1. DISKO LAYOUT (1GB EFI + LUKS Encrypted EXT4)
     disko.devices = {
       disk = {
         main = {
-          # Change this to match your actual disk path (e.g., /dev/sda or /dev/nvme0n1)
           device = lib.mkDefault "/dev/nvme0n1"; 
           type = "disk";
           content = {
@@ -106,11 +97,10 @@
                 size = "100%";
                 content = {
                   type = "luks";
-                  name = "enc"; # The mapped name in /dev/mapper/crypted
+                  name = "enc"; 
                   settings = {
                     allowDiscards = true; # Crucial for NVMe SSD health (TRIM)
                   };
-                  # The actual filesystem inside the LUKS container
                   content = {
                     type = "filesystem";
                     format = "ext4";
