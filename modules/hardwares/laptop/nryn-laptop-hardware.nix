@@ -13,7 +13,7 @@
     boot = {
       initrd.systemd.enable = true;      
       binfmt.emulatedSystems = [ "aarch64-linux" ];
-      kernelPackages = pkgs.linuxPackages;
+      kernelPackages = pkgs.linuxPackages_latest;
       extraModulePackages = [ config.boot.kernelPackages.zenpower ];
       kernelModules = [ "kvm-amd" "zenpower" ];
       initrd.luks.devices."enc".crypttabExtraOpts = [ 
@@ -44,7 +44,11 @@
       initrd.kernelModules = [ ];
     };
 
-    services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+    services.xserver.videoDrivers = 
+    [ 
+      "amdgpu" 
+      # "nvidia" 
+    ];
 
     hardware = {
 
@@ -58,21 +62,21 @@
         enable32Bit = true;
       };
       
-      nvidia = {
-        modesetting.enable = true;
-        open = false;
-        powerManagement.enable = true;
-        powerManagement.finegrained = true;
-        dynamicBoost.enable = true;
-        nvidiaSettings = true;        
-        package = config.boot.kernelPackages.nvidiaPackages.beta;
-        prime = {
-          offload.enable = true;
-          offload.enableOffloadCmd = true;
-          amdgpuBusId = "PCI:5:0:0";
-          nvidiaBusId = "PCI:1:0:0";
-        };
-      };
+      # nvidia = {
+      #   modesetting.enable = true;
+      #   open = false;
+      #   powerManagement.enable = true;
+      #   powerManagement.finegrained = true;
+      #   dynamicBoost.enable = true;
+      #   nvidiaSettings = true;        
+      #   package = config.boot.kernelPackages.nvidiaPackages.beta;
+      #   prime = {
+      #     offload.enable = true;
+      #     offload.enableOffloadCmd = true;
+      #     amdgpuBusId = "PCI:5:0:0";
+      #     nvidiaBusId = "PCI:1:0:0";
+      #   };
+      # };
     };
 
     disko.devices = {
