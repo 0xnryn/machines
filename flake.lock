@@ -1410,11 +1410,11 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1782043982,
-        "narHash": "sha256-KTZpAOF7XOHYAqiQf8zBERgOFZl5GZ3TP6r6h61WOIE=",
+        "lastModified": 1784268858,
+        "narHash": "sha256-gTozzwqONHXwZEasMLwt/XIC6bxJC7ZwFGAIPNjLmcU=",
         "owner": "0xnryn",
         "repo": "opinions",
-        "rev": "933bc692b8a8282566f1e482244e148c1b0a0b5d",
+        "rev": "ab2be5d01ae5b3d98d623600e1b4885787ba10ab",
         "type": "github"
       },
       "original": {

@@ -23,6 +23,7 @@ sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/nryn-laptop-boot.txt nix run nixpkgs#sop
 sudo EDITOR=nano -E sops secrets/0xnryn-laptop.yaml
 
 sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/nryn-laptop-boot.txt sops updatekeys secrets/nryn-laptop.yaml
+sudo EDITOR=nano SOPS_AGE_KEY_FILE=/etc/nryn-laptop-boot.txt sops secrets/nryn-laptop.yaml
 
 env -u SOPS_AGE_KEY_FILE SOPS_AGE_KEY=$(nix run nixpkgs#age -- -d secrets/admin.age 2>/dev/null | grep AGE-SECRET-KEY) nix run nixpkgs#sops -- secrets/nryn-laptop.yaml
 

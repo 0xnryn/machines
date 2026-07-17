@@ -34,7 +34,7 @@
       };
   
       kernelParams = [
-        # "amdgpu.gttsize=16384"
+        "amdgpu.gttsize=16384"
         # "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
       ];
   
@@ -47,7 +47,7 @@
     services.xserver.videoDrivers = 
     [ 
       "amdgpu" 
-      # "nvidia" 
+      "nvidia" 
     ];
 
     hardware = {
@@ -62,21 +62,21 @@
         enable32Bit = true;
       };
       
-      # nvidia = {
-      #   modesetting.enable = true;
-      #   open = false;
-      #   powerManagement.enable = true;
-      #   powerManagement.finegrained = true;
-      #   dynamicBoost.enable = true;
-      #   nvidiaSettings = true;        
-      #   package = config.boot.kernelPackages.nvidiaPackages.beta;
-      #   prime = {
-      #     offload.enable = true;
-      #     offload.enableOffloadCmd = true;
-      #     amdgpuBusId = "PCI:5:0:0";
-      #     nvidiaBusId = "PCI:1:0:0";
-      #   };
-      # };
+      nvidia = {
+        modesetting.enable = true;
+        open = true;
+        powerManagement.enable = true;
+        powerManagement.finegrained = true;
+        dynamicBoost.enable = true;
+        nvidiaSettings = true;        
+        package = config.boot.kernelPackages.nvidiaPackages.beta;
+        prime = {
+          offload.enable = true;
+          offload.enableOffloadCmd = true;
+          amdgpuBusId = "PCI:5:0:0";
+          nvidiaBusId = "PCI:1:0:0";
+        };
+      };
     };
 
     disko.devices = {

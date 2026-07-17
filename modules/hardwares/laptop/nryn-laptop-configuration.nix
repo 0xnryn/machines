@@ -63,6 +63,7 @@
       wget
       yggdrasil    
       zenmonitor 
+      mysql-workbench
     ];
     networking = {
       networkmanager.enable = true;
