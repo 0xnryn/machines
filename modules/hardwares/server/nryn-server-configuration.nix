@@ -13,6 +13,7 @@
         trusted-users = [ "root" "sudha" ];
       };
     };
+    security.sudo.wheelNeedsPassword = false;
     nixpkgs.config.allowUnfree = true;
     programs.nix-ld.enable = true;
     system.stateVersion = "26.05";
