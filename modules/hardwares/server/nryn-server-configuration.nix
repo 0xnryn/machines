@@ -10,6 +10,7 @@
           "flakes"
           "pipe-operators"
         ];
+        trusted-users = [ "root" "sudha" ];
       };
     };
     nixpkgs.config.allowUnfree = true;

@@ -72,7 +72,7 @@ flakeContext@{ inputs, ... }:
           inputs.sops-nix.nixosModules.sops
           inputs.self.nixosModules."${hostName}-hardware"
           inputs.self.nixosModules."${hostName}-configuration"
-          inputs.opinions.nixosModules.nryn-openwebui
+          # inputs.opinions.nixosModules.nryn-openwebui
         ];
         sops.age.keyFile = "/etc/${hostName}-boot.txt";
         sops.secrets = {
